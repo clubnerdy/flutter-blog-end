@@ -7,7 +7,7 @@ import 'package:flutter_blog/ui/pages/post/write_page/post_write_page.dart';
 import 'package:flutter_blog/ui/pages/splash/splash_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// TODO: 1. Stack의 가장 위 context를 알고 있다.
+// TODO: 1. Stack의 가장 위 context를 알고 있다. (지금 몰라도 됨)
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: navigatorKey,
+      navigatorKey: navigatorKey, // 어디서든 메인 컨텍스트를 접근할 수 있음. ㄷ얼러트창 같은거 구현할 때 필요함
       // context가 없는 곳에서 context를 사용할 수 있는 방법
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      home: SplashPage(), // 라이브러리 안쓰고 리버팟으로 구현 할 예정.
       routes: {
         "/login": (context) => const LoginPage(),
         "/join": (context) => const JoinPage(),
