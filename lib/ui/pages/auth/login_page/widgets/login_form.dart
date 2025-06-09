@@ -14,7 +14,7 @@ class LoginForm extends ConsumerWidget {
     LoginFM fm = ref.read(loginProvider.notifier);
     LoginModel model = ref.watch(loginProvider);
 
-    Logger().d(model);
+    // Logger().d(model);
 
     return Form(
       child: Column(

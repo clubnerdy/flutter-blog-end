@@ -5,6 +5,7 @@ import 'package:flutter_blog/data/repository/user_repository.dart';
 import 'package:flutter_blog/main.dart';
 import 'package:flutter_blog/ui/pages/auth/join_page/join_fm.dart';
 import 'package:flutter_blog/ui/pages/auth/login_page/login_fm.dart';
+import 'package:flutter_blog/ui/pages/post/list_page/post_list_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 
@@ -68,28 +69,32 @@ class SessionGVM extends Notifier<SessionModel> {
     // 3. 파싱
     User user = User.fromMap(body["response"]);
 
-    // 4. 토큰을 디바이스 저장
+    // 4. 토큰을 디바이스 저장 (앱을 다시 시작할 때, 자동 로그인 하기 위해)
     await secureStorage.write(key: "accessToken", value: user.accessToken);
 
     // 5. 세션모델 갱신
     state = SessionModel(user: user, isLogin: true);
 
-    // 5. dio의 header에 토큰 세팅
+    // 6. dio의 header에 토큰 세팅 (Bearer 이거 붙어 있음)
     dio.options.headers["Authorization"] = user.accessToken;
 
-    // 6. 게시글 목록 페이지 이동
+    // 7. 게시글 목록 페이지 이동
     Navigator.pushNamed(mContext, "/post/list");
   }
 
   Future<void> logout() async {
-    // TODO 2.
     // 1. 토큰 디바이스 제거
+    await secureStorage.delete(key: "accessToken");
 
     // 2. 세션모델 초기화
+    state = SessionModel();
 
     // 3. dio 세팅 제거
+    dio.options.headers["Authorization"] = "";
 
     // 4. login 페이지 이동
+    scaffoldKey.currentState!.openEndDrawer();
+    Navigator.pushNamed(mContext, "/login");
   }
 }
 
@@ -98,7 +103,7 @@ class SessionModel {
   User? user;
   bool? isLogin;
 
-  SessionModel({this.user, this.isLogin = false});
+  SessionModel({this.user, this.isLogin = false}
 
   @override
   String toString() {
