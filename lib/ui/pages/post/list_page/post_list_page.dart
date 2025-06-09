@@ -7,8 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final scaffoldKey = GlobalKey<ScaffoldState>();
 
 class PostListPage extends StatelessWidget {
-  final refreshKey = GlobalKey<RefreshIndicatorState>();
-
   PostListPage();
 
   @override
@@ -19,11 +17,7 @@ class PostListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Blog"),
       ),
-      body: RefreshIndicator(
-        key: refreshKey,
-        onRefresh: () async {},
-        child: PostListBody(),
-      ),
+      body: PostListBody(),
     );
   }
 }
