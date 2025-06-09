@@ -103,7 +103,7 @@ class SessionModel {
   User? user;
   bool? isLogin;
 
-  SessionModel({this.user, this.isLogin = false}
+  SessionModel({this.user, this.isLogin = false});
 
   @override
   String toString() {
